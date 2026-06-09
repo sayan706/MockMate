@@ -221,7 +221,7 @@ def get_choice(interviews):
 
         try:
             choice = int(
-                input("\n👉 Enter your choice (1-4): ")
+                input("\n👉 Enter your choice: ")
             )
 
             if choice in valid_ids:
