@@ -81,6 +81,33 @@ def strip_markdown(text):
     # Collapse multiple blank lines
     text = re.sub(r"\n{3,}", "\n\n", text)
 
+    # ==================================
+    # SPECIAL CHARACTERS FOR TTS
+    # ==================================
+
+    # Replace / with "or" (e.g. "TCP/UDP" → "TCP or UDP")
+    text = text.replace("/", " or ")
+
+    # Remove leftover # symbols
+    text = text.replace("#", "")
+
+    # Remove leftover * symbols
+    text = text.replace("*", "")
+
+    # Remove leftover _ symbols used for emphasis
+    text = re.sub(r"_+", " ", text)
+
+    # Replace & with "and"
+    text = text.replace("&", " and ")
+
+    # Remove other noisy symbols
+    text = text.replace("~", "")
+    text = text.replace("|", "")
+    text = text.replace("\\", "")
+
+    # Collapse extra spaces from replacements
+    text = re.sub(r"  +", " ", text)
+
     return text.strip()
 
 
@@ -374,6 +401,12 @@ with improvement plan and final remarks.
     })
 
     print("\n⏳ Generating final report...\n")
+
+    engine = pyttsx3.init()
+    engine.setProperty("rate", 170)
+    engine.say("Generating your final report. Please wait.")
+    engine.runAndWait()
+    engine.stop()
 
     report = generate_with_retry(messages)
 
