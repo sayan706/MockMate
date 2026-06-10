@@ -338,6 +338,25 @@ def run_interview():
         speak(next_question)
 
     # ==================================
+    # COLLECT FINAL ANSWER
+    # ==================================
+    # The loop's last iteration asked a question
+    # but never collected the answer — grab it now.
+
+    else:
+        # 'else' on for-loop runs only if we
+        # did NOT break (i.e. no early exit)
+        final_answer = get_user_input()
+
+        if final_answer.lower() not in (
+            "quit", "exit", "stop"
+        ):
+            messages.append({
+                "role": "user",
+                "content": final_answer
+            })
+
+    # ==================================
     # FINAL REPORT
     # ==================================
 
